@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Title.unity
+    guid: fdb6c32251986db47b7a769dae863b1e
+  - enabled: 1
+    path: Assets/Baseball-80km.unity
+    guid: 68d20f6b6a645984ba40ac61a284638c
+  - enabled: 1
+    path: Assets/Baseball-120km.unity
+    guid: f944b85e5a9500a46977bcdf6f1cad0f
+  - enabled: 1
+    path: Assets/Baseball-160km.unity
+    guid: cb854822eb686054a9e3a2c4c651e16f
+  - enabled: 1
+    path: Assets/Finish.unity
+    guid: 665a6454940573a46b8e1fbfc509e016
+  - enabled: 0
+    path: Assets/debugfile.unity
+    guid: 9aebee505ee23e244a8b8f94891d242f
+  m_configObjects:
+    Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 3ec818544bf03d745abc8e363a3ddf49, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 118ac9e9fec8ca949afe0f190626ef8c, type: 2}
