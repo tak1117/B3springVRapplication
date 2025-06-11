@@ -1,51 +1,44 @@
+using System.Diagnostics;
 using UnityEngine;
 using Valve.VR;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 2.0f;
-    public float rotationSpeed = 50.0f;
+    public float moveSpeed = 2f;
+    public float rotationSpeed = 50f;
 
-    // SteamVRのアクションを指定
-    public SteamVR_Action_Vector2 leftStickAction;
-    public SteamVR_Action_Vector2 rightStickAction;
+    public SteamVR_Action_Vector2 moveAction;
+    public SteamVR_Action_Vector2 turnAction;
 
-    private CharacterController characterController;
-    private Transform cameraTransform;
+    public CharacterController characterController;
 
     void Start()
     {
-        characterController = GetComponent<CharacterController>();
-
-        // メインカメラ（HMD）のTransformを取得
-        cameraTransform = Camera.main.transform;
+        // 初期化ログ
+        Debug.Log("PlayerMovement script started.");
+        if (moveAction == null || turnAction == null)
+        {
+            Debug.LogWarning("SteamVR actions not assigned in Inspector.");
+        }
     }
 
     void Update()
     {
-        // 左スティックの移動処理
-        Vector2 moveValue = leftStickAction.axis;
-        Vector3 direction = new Vector3(moveValue.x, 0, moveValue.y);
+        if (moveAction != null)
+        {
+            Vector2 input = moveAction.axis;
+            Debug.Log("Move input: " + input); // ← ログ出力
+            Vector3 move = new Vector3(input.x, 0, input.y);
+            move = transform.TransformDirection(move);
+            characterController.Move(move * moveSpeed * Time.deltaTime);
+        }
 
-        // カメラの向きを基準に移動方向を変換
-        Vector3 cameraForward = cameraTransform.forward;
-        Vector3 cameraRight = cameraTransform.right;
-
-        // 高さ成分を無視して水平方向のみ考慮
-        cameraForward.y = 0;
-        cameraRight.y = 0;
-        cameraForward.Normalize();
-        cameraRight.Normalize();
-
-        // カメラ基準での移動ベクトルを計算
-        Vector3 move = (cameraForward * direction.z + cameraRight * direction.x) * moveSpeed * Time.deltaTime;
-        transform.position += new Vector3(move.x, 0, move.z);
-
-        // 右スティックの回転処理
-        Vector2 rotationValue = rightStickAction.axis;
-        float yaw = rotationValue.x * rotationSpeed * Time.deltaTime;
-        float pitch = -rotationValue.y * rotationSpeed * Time.deltaTime;
-        transform.Rotate(0, yaw, 0, Space.World);
-        Camera.main.transform.Rotate(pitch, 0, 0);
+        if (turnAction != null)
+        {
+            Vector2 turnInput = turnAction.axis;
+            Debug.Log("Turn input: " + turnInput); // ← ログ出力
+            float rotation = turnInput.x * rotationSpeed * Time.deltaTime;
+            transform.Rotate(0, rotation, 0);
+        }
     }
 }

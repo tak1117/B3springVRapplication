@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/Title.unity
+- path: Assets/Baseball-80km.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
